@@ -26,17 +26,16 @@ plus 742 Trillionen:
 
 ** Warum ist ein (gutes) Typsystem wichtig?
 
-*** Typen sind Dokumentation
-#+BEGIN_SRC javascript
-function isDrivingTimeTooLong(int, int)
-#+END_SRC
+*** Beispielproblem: Liste Partitionieren (group by)
 
-#+BEGIN_SRC haskell
-data Populousness = Dense | Thin | Secluded
-type DrivingTime = Number
+| Name   | Hans | Lisa | Tom | Susi | Peter |
+| Kanton | TG   | ZH   | SG  | TG   | ZH    |
 
-isDrivingTimeTooLong :: Populousness -> DrivingTime -> Bool
-#+END_SRC
+Partitioniert nach Kanton:
+
+- SG: Tom
+- TG: Hans, Susi
+- ZH: Lisa, Peter
 
 *** Mehr Typen → weniger Tests
 
@@ -57,10 +56,10 @@ function testReturnsMapOfArrays();
 *** partition in Haskell
 
 #+BEGIN_SRC haskell
-partition :: (a -> b) -> [a] -> Map b [a]
+partition :: Ord b => (a -> b) -> [a] -> Map b [a]
 #+END_SRC
 
-
++ Gratis Dokumentation!
 
 
 ** rest
