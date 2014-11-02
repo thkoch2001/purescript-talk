@@ -1,0 +1,118 @@
+#+TITLE: PureScript
+#+AUTHOR: Thomas Koch
+#+EMAIL: koch@comsolit.com
+* Purescript
+** "The JavaScript Problem"
+
+1. JavaScript sucks.
+2. It's the only browser-language.
+
+** JavaScript, das neue Assembler
+
+- Coffeescript
+- Dart: Google
+- Typescript, Microsoft
+- GWT (Java)
+- ClojureScript (lisp)
+
+plus 742 Trillionen:
+[[https://github.com/jashkenas/coffeescript/wiki/List-of-languages-that-compile-to-JS][github.com/jashkenas/coffeescript/wiki/List-of-languages-that-compile-to-JS]]
+
+** Auswahlkriterien
+
+- exzellentes Typsystem
+- schrittweises Einführen in legacy Projekte
+- ROI des Lernaufwandes
+
+** Warum ist ein (gutes) Typsystem wichtig?
+
+*** Typen sind Dokumentation
+#+BEGIN_SRC javascript
+function isDrivingTimeTooLong(int, int)
+#+END_SRC
+
+#+BEGIN_SRC haskell
+data Populousness = Dense | Thin | Secluded
+type DrivingTime = Number
+
+isDrivingTimeTooLong :: Populousness -> DrivingTime -> Bool
+#+END_SRC
+
+*** Mehr Typen → weniger Tests
+
+#+BEGIN_SRC php
+/**
+ * @param callable/string $criterion by which to partition
+ * @param traversable $traversable decidable by $criterion
+ * @return array[partitionKey -> partitionElements]
+ */
+function arrayPartition($criterion, $traversable);
+
+// Tests that wouldn't be necessary with a Type System!
+function testThrowsForBadCriterion();
+function testThrowsForBadTraversable();
+function testReturnsMapOfArrays();
+#+END_SRC
+
+*** partition in Haskell
+
+#+BEGIN_SRC haskell
+partition :: (a -> b) -> [a] -> Map b [a]
+#+END_SRC
+
+
+
+
+** rest
+- Code ist da, um von Menschen gelesen zu werden
+- weniger Code schreiben, Ideen nur einmal schreiben
+- keine Überraschungen, keine versteckten Seiteneffekte, keine Abhängigkeit von globalen Variablen
+
+- Java hat kein gutes Typsystem
+- weniger Tests, mehr Sicherheit
+- "make illegal states unrepresentable"
+- "if the only type systems I knew were C, C++, Java, or Go's,
+  I'd be a Ruby programmer too."
+- reasoning, Schlußfolgern
+- type inference: schnell entwerfen, dann absichern
+
+** Functor nicht möglich in Java
+
+ghci> :info Functor
+class Functor f where
+  fmap :: (a -> b) -> f a -> f b
+  ...
+ghci> fmap (*2) [1,2,3]
+[2,4,6]
+ghci> fmap reverse getLine
+foo
+"oof"
+
+Java:
+
+interface Functor<F> {
+  <A, B> F<B> fmap(Function<A, B> f, F<A> a);
+}
+
+** Beispiele für Sprachen mit modernen Typsystemen:
+
+- Agda, Idris, Coq
+- Haskell, Purescript
+- OCaml
+
+** Was ist ein gutes Typsystem?
+
+- Summentypen (OR), z.B. Either[Failure|Success]
+- Pattern matching
+- Produkttypen (AND): records, objects, tuples
+- Parametric Polymorphism
+  - PHP kann nur array
+
+** Schönes an funktionalen Sprachen
+
+- immutability, kein State:
+  $datetime = new DateTime("now")
+  $x = $scheduler->getNextRunTime($datetime);
+  $datetime = ?
+- partial application
+
