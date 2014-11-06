@@ -1,7 +1,125 @@
 #+TITLE: PureScript
 #+AUTHOR: Thomas Koch
 #+EMAIL: koch@comsolit.com
-* Purescript
+* Typen, Haskell, Purescript
+** Testen: Du kannst nur verlieren
+
+a) Toll, mein Test hat einen Bug gefunden! :-(
+
+b) Meine Tests konnten die Bugs nicht finden... :-(
+
+** Tests
+
+testen, dass ein Programm bestimmte
+fehlerhafte Eigenschaften nicht hat
+
+** Ich brauche Beweise!
+
+- Typsysteme sind Beweissysteme
+- Typen sind Theoreme über Programmteile
+
+** Beispiel 1
+
+#+BEGIN_SRC haskell
+? :: a -> a
+#+END_SRC
+
+** Beispiel 1
+
+#+BEGIN_SRC haskell
+id :: a -> a
+id x = x
+#+END_SRC
+
+** Beispiel 2
+
+#+BEGIN_SRC haskell
+f :: List a -> List a
+f x y = ...
+#+END_SRC
+
+*** COMMENT
+- f kann nur Elemente aus x unverändert zurückgeben
+
+** Literatur
+
+Theorems for free!
+Philip Wadler
+Juni 1989
+
+** Typen sind Dokumentation
+
+#+BEGIN_SRC haskell
+? :: (a -> b) -> List a -> Map b (List a)
+#+END_SRC
+
+** Sprachen mit gutem Type System
+
+- Haskell
+- OCaml
+- Idris
+- ...
+- NICHT Java!
+
+** Haskell
+
+- Verbreitung
+- Bibliotheken/Tools
+- Uni Konstanz
+
+** Wie Schön!
+
+... JavaScript
+... PHP
+
+:-(((
+
+** PureScript
+
+Haskell-Dialekt -> JavaScript
+
+wie: Coffeescript, Dart, Typescript,
+GWT, ClojureScript, ...
+
+[[https://github.com/jashkenas/coffeescript/wiki/List-of-languages-that-compile-to-JS][github.com/jashkenas/coffeescript/wiki/List-of-languages-that-compile-to-JS]]
+
+** PureScript von JavaScript
+
+CommonJS Module!
+
+#+BEGIN_SRC javascript
+var myModule = require('MyModule');
+
+myModule.partition(isPrim)([1, 2, 3, 4, 5]);
+#+END_SRC
+
+** JavaScript von PureScript - einfach
+
+#+BEGIN_SRC haskell
+foreign import encodeURIComponent :: String -> String
+
+x = encodeURIComponent "Hello World"
+
+-- x == "Hello%20World"
+#+END_SRC
+
+** JavaScript von PureScript - komplex
+
+#+BEGIN_SRC haskell
+foreign import arrayLength
+  """function arrayLength(arr) {
+       return arr.length;
+     };
+  """ :: forall a. [a] -> Int
+#+END_SRC
+
+** PHP?
+
+- Lua: [[https://github.com/osa1/psc-lua][github.com/osa1/psc-lua]]
+- Python: [[https://github.com/purescript/purescript/issues/591][github.com/purescript/purescript/issues/591]]
+- PHP: [[https://github.com/purescript/purescript/issues/612][github.com/purescript/purescript/issues/612]]
+
+* stuff
 ** "The JavaScript Problem"
 
 1. JavaScript sucks.
@@ -56,7 +174,7 @@ function testReturnsMapOfArrays();
 *** partition in Haskell
 
 #+BEGIN_SRC haskell
-partition :: Ord b => (a -> b) -> [a] -> Map b [a]
+partition :: (a -> b) -> List a -> Map b [a]
 #+END_SRC
 
 + Gratis Dokumentation!
